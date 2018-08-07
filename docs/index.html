@@ -1,0 +1,140 @@
+<html>
+
+    <head>
+                <script src="js/jquery-2.1.4.min.js"></script>
+                <script src="js/highstock.js"></script>
+                <script src="js/modules/drag-panes.js"></script>
+                <script src="js/modules/exporting.js"></script>
+                <script src="js/modules/annotations.js"></script>
+                <script src="js/bundle.js"></script>
+                <script src="js/charting.js"></script>
+                <script src="js/bot.js"></script>
+                <script src="js/algos.js"></script>
+
+                <link rel="stylesheet" href="css/loader.css">
+                <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    </head>
+
+
+    <body>
+
+
+      <div class="lds-css ng-scope loadContain" id="theLoader">
+        <center>loading
+
+        <div style="width:100%;height:100%;  " class="lds-ripple"><div></div><div></div></div>
+
+        </center>
+      </div>
+
+        <div id="hello">
+          <select id="exchange" class="dropdown-select">
+                <option value="bitfinex" selected>Bitfinex</option>
+                <option value="poloniex">Poloniex</option>
+          </select>
+
+
+
+
+
+          <select id="currencypair" class="dropdown-select">
+              <option value="BTCUSD">BTC / USD</option>
+              <option value="ETHUSD" selected>ETH / USD</option>
+              <option value="BCHUSD">BCH / USD</option>
+              <option value="ETCUSD">ETC / USD</option>
+              <option value="LTCUSD">LTC / USD</option>
+              <option value="XRPUSD" >XRP / USD</option>
+              <option value="ZECUSD" >ZEC / USD</option>
+              <option value="EOSUSD" >EOS / USD</option>
+              <option value="OMGUSD" >OMG / USD</option>
+              <option value="NEOUSD" >NEO / USD</option>
+              <option value="EDOUSD" >EDO / USD</option>
+              <option value="BTGUSD" >BTG / USD</option>
+              <option value="DATAUSD" >DATA / USD</option>
+
+        </select>
+
+
+
+              <select id="period" class="dropdown-select">
+              <option value="1m">1 minute</option>
+                  <option value="5m" selected>5 minutes</option>
+                  <option value="15m">15 minutes</option>
+                  <option value="30m">30 minutes</option>
+                  <option value="1h" >1 hour</option>
+                  <option value="1D">1 day</option>
+                  <option value="7D">7 days</option>
+                  <option value="1M">1 month</option>
+              </select>
+
+            </div>
+
+
+
+         <div id="container" style="height: 400px; width: 100%"></div>
+
+
+         <br><br><br>
+
+         <center><button onclick="runBot()" id="runButton">Run Bot</button>
+        <select id="algoSelect">
+          <option value="williamr" selected>Williams %R (-90, -80)</option>
+          <option value="macd">MACD (-2, .1)</option>
+          <option value="random">Random</option>
+
+        </select>
+         </center>
+
+         <br><br>
+
+         <div id="results" style="display:none; color:white">
+             Results:
+            <br><hr><br><br>
+
+            Amount in Wallet = <span id="amountInWallet"></span><br><br>
+            Amount in Crypto = <span id="amountInMarket"></span> @ <span id="currentPrice"></span><br><br>
+            Total Account Value = <span id="accountValue"></span><br><br>
+         </div>
+    </body>
+
+
+
+    <script>
+
+
+        function runBot(){
+
+            r= new bot();
+
+            selectedAlgo  = $('#algoSelect').val();
+            switch(selectedAlgo){
+
+              case "williamr":
+                pickedAlgo  = willerAlgo;
+
+              break;
+
+              case "random":
+                pickedAlgo  = randomWalkAlgo;
+                
+              break;
+
+              case "macd":
+                pickedAlgo  = macdFunc;
+                
+              break;
+
+              default:
+                pickedAlgo  = willerAlgo;
+              break;
+            }
+
+           r.algo = pickedAlgo;
+            r.algo();
+            $('#runButton').val('run again')
+        }
+
+
+    </script>
+
+</html>
