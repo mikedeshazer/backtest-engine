@@ -10,8 +10,7 @@ There is a demo of how this works (bot.html). This demo pulls live data from Pol
 
 To build a bot:
 
-``` javascript
-
+```js
   mybot = new bot();
 
   mybot.algo = pickedAlgo; //your referred algo (some are stored in js/algo.js)
@@ -19,7 +18,7 @@ To build a bot:
   mybot.algo(); //run the algo and visualize it
 
 
- javascript ```
+```
 
 
 Here is an example of on how to build a bot algo:
@@ -30,7 +29,7 @@ this.buy(index, weight, metric) allows you to buy a particular index in the loop
 
 Example:
 
-``` javascript
+```js
 function willerAlgo(){
 //really good for bear market
 //high frequency
@@ -115,7 +114,7 @@ function willerAlgo(){
 
 
 
- javascript```
+ ```
 
 
 Have fun!
