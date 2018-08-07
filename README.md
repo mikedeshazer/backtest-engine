@@ -1,6 +1,7 @@
 # Backtest-Engine
 Simple backtest engine in javascript with built-in visualizer 
 
+## Try it here: [Demo](https://mikedeshazer.github.io/backtest-engine/)
 -----
 
 This simple js library (js/bot.js), allows you to test backtest trade strategies and backtest.
