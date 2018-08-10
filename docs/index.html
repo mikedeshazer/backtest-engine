@@ -19,15 +19,15 @@
     <body>
 
 
-      <div class="lds-css ng-scope loadContain" id="theLoader">
+      <div class="lds-css ng-scope loadContain" id="theLoader" style="left:0px; top:0px;">
         <center>loading
 
-        <div style="width:100%;height:100%;  " class="lds-ripple"><div></div><div></div></div>
+        <div style="width:100%;height:100%;   " class="lds-ripple"><div></div><div></div></div>
 
         </center>
       </div>
 
-        <div id="hello">
+        <div id="hello" style="position:fixed; top:0px; z-index:40; left:0px">
           <select id="exchange" class="dropdown-select">
                 <option value="bitfinex" selected>Bitfinex</option>
                 <option value="poloniex">Poloniex</option>
@@ -71,26 +71,33 @@
 
 
 
-         <div id="container" style="height: 400px; width: 100%"></div>
+         <div id="container" style="height: 100%; width: 100%; position:absolute; left:0px; top:30px"></div>
 
 
          <br><br><br>
 
-         <center><button onclick="runBot()" id="runButton">Run Bot</button>
-        <select id="algoSelect">
+         <div id="sidepanel" style="position:fixed; z-index:33; background-color:#000; max-width:50px; overflow:none; text-align:center; ">
+         <center>
+          <select id="algoSelect">
           <option value="williamr" selected>Williams %R (-90, -80)</option>
           <option value="macd">MACD (-2, .1)</option>
           <option value="random">Random</option>
 
         </select>
+          <br><br>
+
+          <button onclick="runBot()" id="runButton">Run Bot</button>
+        
          </center>
 
          <br><br>
 
-         <div id="results" style="display:none; color:white">
+         <div id="results" style="display:none; color:white; position:fixed; bottom:0px; left:0px; height:70%; width:100%; z-index:20; background-color:black">
+             
+          <div id="closeButton" onclick="hideResults()" style="position:absolute; right:2px; font-size:20px; top:2px; color:#fff"><a href="#" style="color:#ffffff; text-decoration:none; z-index:20; ">x</a></div>
              Results:
             <br><hr><br><br>
-
+            Starting in Wallet = $25,000<br><br>
             Amount in Wallet = <span id="amountInWallet"></span><br><br>
             Amount in Crypto = <span id="amountInMarket"></span> @ <span id="currentPrice"></span><br><br>
             Total Account Value = <span id="accountValue"></span><br><br>
