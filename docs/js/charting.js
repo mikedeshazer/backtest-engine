@@ -126,7 +126,7 @@
                colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
                   '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
                chart: {
-                  backgroundColor: "#2f3e47",
+                  backgroundColor: "#000",
                   style: {
                      fontFamily: '\'Unica One\', sans-serif'
                   },
@@ -335,7 +335,7 @@ chart1 = Highcharts.stockChart('container', {
         },
 
         title: {
-            text: currencypair + ' Historical'
+            text: currencypair + ' Hist. Backtest'
         },
 
         yAxis: [{
@@ -467,6 +467,11 @@ function listenForChartUpdate(){
 }
 
 
+
+function hideResults(){
+
+  $('#results').hide('fast');
+}
 
  function updateCandleChart(){
 
