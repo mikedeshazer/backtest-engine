@@ -24,6 +24,210 @@ function randomWalkAlgo(){
 }
 
 
+
+
+function fisherAlgo(){
+
+    var index = 0;
+
+    highestHigh =0;
+    lowestLow = 0;
+
+    allPrevious = [];
+
+    topGuide = .5;
+    bottomGuide = -1.0;
+    highSell = 0;
+    lowBuy = 0;
+
+  f = new fisherTransform();
+  f.onStart(10);
+
+        for(i in this.data){
+
+          weight=100;
+
+          fisherNums= f.onIntervalClose(10, this.data[i][2], this.data[i][3])
+          
+          if(index < 16){
+            index= index+1;
+            continue;
+          }
+
+          fish = fisherNums[0]['value']
+          signal = fisherNums[1]['value']
+        
+
+
+        if(fish < -bottomGuide && signal <fish){
+          this.buy(index, weight, fish);
+        }
+        else if(fish > topGuide && signal > fish){
+          this.sell(index, weight, fish)
+        }
+        else{
+          this.hold(index,weight)
+        }
+
+       
+
+
+
+
+            index= index+1;
+        }
+
+}
+
+
+
+
+
+
+function fisherTransform(){
+
+var periodLow=0
+var raw=0
+ var output=0
+
+average = function(elmt) {
+  var sum = 0;
+for( var i = 0; i < elmt.length; i++ ){
+    sum += parseInt( elmt[i], 10 ); //don't forget to add the base
+}
+
+var avg = sum/elmt.length;
+
+return avg;
+}
+
+
+var smoothingExponent,
+    fisherExponent,
+    label,
+    signalLabel,
+    midpoints = [],
+    raws = [],
+    smoothed,
+    logarithm,
+    logarithms = [],
+    fisher,
+    lastFisher;
+
+// TODO Could parameterize smoothing periods
+var smoothingPeriods = 5;
+var fisherPeriods = 3;
+
+function validate (periods) {
+    if (typeof periods !== "number") {
+        error("Fisher Transform periods must be a number");
+    }
+    if (periods % 1 !== 0) {
+        error("Fisher Transform periods must be an integer");
+    }
+    if (periods > 100) {
+        error("Fisher Transform maximum periods is 100");
+    }
+    if (periods <= 0) {
+        error("Fisher Transform periods must be greater than 0");
+    }
+}
+
+function getRunUpCount (periods) {
+    return periods + smoothingPeriods + fisherPeriods + 1;
+}
+
+function getBufferSize () {
+    return 0;
+}
+
+this.onStart =function(periods) {
+    smoothingExponent = 2 / (smoothingPeriods + 1);
+    fisherExponent = 2 / (fisherPeriods + 1);
+    label = "Fisher Transform (" + periods + ")";
+    signalLabel = label + " Signal";
+}
+
+this.onIntervalClose = function (periods, HIGH, LOW) {
+
+   
+    
+    midpoint = (HIGH + LOW) / 2
+   
+
+    midpoints.push(midpoint);
+
+    if (midpoints.length < periods) {
+        return null;
+    } else if (midpoints.length > periods) {
+        midpoints.shift();
+    }
+
+    periodLow = Math.min.apply(null, midpoints);
+
+    raw = 2 * ((midpoint - periodLow) / (Math.max.apply(null, midpoints) - periodLow)) - 1;
+    if(isNaN(raw)){
+        raw =0;
+    }
+    if (smoothed === undefined) {
+        raws.push(raw);
+        if (raws.length === smoothingPeriods) {
+            smoothed = average(raws);
+        } else {
+            return null;
+        }
+    } else {
+        smoothed = ((raw - smoothed) * smoothingExponent) + smoothed;
+    }
+
+    logarithm = Math.log((1 + smoothed) / (1 - smoothed));
+
+    if (fisher === undefined) {
+        logarithms.push(logarithm);
+        if (logarithms.length === fisherPeriods) {
+            fisher = average(logarithms);
+        } else {
+            return null;
+        }
+    } else {
+        fisher = ((logarithm - fisher) * fisherExponent) + fisher;
+    }
+
+    if (lastFisher === undefined) {
+        lastFisher = fisher;
+        return null;
+    }
+
+    output = [{
+        name: label,
+        overlay: false,
+        value: fisher,
+        precision: 3
+    }, {
+        name: signalLabel,
+        overlay: false,
+        value: lastFisher,
+        precision: 3
+    }];
+
+    lastFisher = fisher;
+
+    return output;
+}
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+
+
+}
+
+
+
+
+
+
 function williamsR(highs, lows, currentClose){
     for(i in highs){
         if(i==0){

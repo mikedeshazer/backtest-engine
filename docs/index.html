@@ -80,6 +80,7 @@
          <center>
           <select id="algoSelect">
           <option value="williamr" selected>Williams %R (-90, -80)</option>
+          <option value="fisher" >Fisher Transformation</option>
           <option value="macd">MACD (-2, .1)</option>
           <option value="random">Random</option>
 
@@ -130,6 +131,12 @@
                 pickedAlgo  = macdFunc;
                 
               break;
+
+              case "fisher":
+                pickedAlgo  = fisherAlgo;
+                
+              break;
+
 
               default:
                 pickedAlgo  = willerAlgo;
