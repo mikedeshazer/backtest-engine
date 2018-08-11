@@ -37,8 +37,8 @@ function fisherAlgo(){
 
     topGuide = .5;
     bottomGuide = -1.0;
-    highSell = 0;
-    lowBuy = 0;
+    highSellFisher = 0;
+    lowBuyFisher = 0;
 
   f = new fisherTransform();
   f.onStart(10);
@@ -58,11 +58,14 @@ function fisherAlgo(){
           signal = fisherNums[1]['value']
         
 
-
-        if(fish < -bottomGuide && signal <fish){
+// && fish < lowBuyFisher
+        if(fish < -bottomGuide && signal <fish ){
+          lowBuyFisher = fish;
           this.buy(index, weight, fish);
         }
+        // && fish > highSellFisher 
         else if(fish > topGuide && signal > fish){
+          highSellFisher = fish;
           this.sell(index, weight, fish)
         }
         else{
